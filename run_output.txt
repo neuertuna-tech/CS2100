@@ -1,0 +1,115 @@
+
+===== DATASET INSPECTION =====
+Shape: (5000, 29)
+Columns: ['player_name', 'position', 'position_group', 'team', 'years_exp', 'season', 'week', 'offense_pct', 'fantasy_points_ppr', 'avg_pass_attempts', 'avg_complete_pass', 'avg_passing_yards', 'avg_pass_touchdown', 'avg_interception', 'avg_targets', 'avg_receptions', 'avg_receiving_yards', 'avg_yards_after_catch', 'avg_rush_attempts', 'avg_rushing_yards', 'avg_rush_touchdown', 'avg_touches', 'avg_total_yards', 'avg_total_tds', 'avg_fantasy_points_ppr', 'prev_4_trend_touches', 'prev_4_trend_total_yards', 'prev_4_trend_total_tds', 'prev_4_trend_fantasy_points_ppr']
+
+First 5 rows:
+           player_name  ... prev_4_trend_fantasy_points_ppr
+64715    Craig Stevens  ...                        0.000000
+31294      T.Y. Hilton  ...                       -0.765854
+39600  Lance Kendricks  ...                        1.888889
+27858      James Hanna  ...                        0.000000
+38643    Brevin Jordan  ...                       -1.950000
+
+[5 rows x 29 columns]
+
+Missing values:
+player_name                        0
+position                           0
+position_group                     0
+team                               0
+years_exp                          0
+season                             0
+week                               0
+offense_pct                        0
+fantasy_points_ppr                 0
+avg_pass_attempts                  0
+avg_complete_pass                  0
+avg_passing_yards                  0
+avg_pass_touchdown                 0
+avg_interception                   0
+avg_targets                        0
+avg_receptions                     0
+avg_receiving_yards                0
+avg_yards_after_catch              0
+avg_rush_attempts                  0
+avg_rushing_yards                  0
+avg_rush_touchdown                 0
+avg_touches                        0
+avg_total_yards                    0
+avg_total_tds                      0
+avg_fantasy_points_ppr             0
+prev_4_trend_touches               0
+prev_4_trend_total_yards           0
+prev_4_trend_total_tds             0
+prev_4_trend_fantasy_points_ppr    0
+dtype: int64
+
+===== TARGET CLASS BALANCE =====
+high_fantasy_game
+0    3306
+1    1694
+Name: count, dtype: int64
+high_fantasy_game
+0    0.6612
+1    0.3388
+Name: proportion, dtype: float64
+
+===== TRAIN/TEST SPLIT =====
+Training rows: 4000
+Testing rows: 1000
+
+Training baseline Logistic Regression model...
+
+===== Baseline Logistic Regression =====
+Accuracy: 0.845
+Precision: 0.737
+Recall: 0.844
+F1: 0.787
+ROC_AUC: 0.912
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.91      0.85      0.88       661
+           1       0.74      0.84      0.79       339
+
+    accuracy                           0.84      1000
+   macro avg       0.83      0.84      0.83      1000
+weighted avg       0.85      0.84      0.85      1000
+
+Confusion Matrix:
+[[559 102]
+ [ 53 286]]
+
+Tuning Random Forest with cross-validation...
+Best parameters: {'classifier__max_depth': 14, 'classifier__min_samples_leaf': 3, 'classifier__n_estimators': 80}
+
+===== Tuned Random Forest =====
+Accuracy: 0.855
+Precision: 0.766
+Recall: 0.823
+F1: 0.794
+ROC_AUC: 0.926
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.91      0.87      0.89       661
+           1       0.77      0.82      0.79       339
+
+    accuracy                           0.85      1000
+   macro avg       0.84      0.85      0.84      1000
+weighted avg       0.86      0.85      0.86      1000
+
+Confusion Matrix:
+[[576  85]
+ [ 60 279]]
+
+===== FINAL SUMMARY =====
+Project: NFL Fantasy Football High-Scoring Game Prediction
+Target: 1 if player scored at least 10 PPR fantasy points, else 0
+Baseline model: Logistic Regression
+Final model: Tuned Random Forest
+Results saved to reports/model_results.csv
+Model saved to models/tuned_random_forest_model.pkl
